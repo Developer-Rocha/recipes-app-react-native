@@ -1,22 +1,23 @@
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
-// const defaultOptions = {
-// 	watchQuery: {
-// 		fetchPolicy: "cache-and-network",
-// 		errorPolicy: "ignore",
-// 	},
-// 	query: {
-// 		fetchPolicy: "no-cache",
-// 		errorPolicy: "all",
-// 	},
-// 	mutate: {
-// 		errorPolicy: "all",
-// 	},
-// };
+const defaultOptions = {
+	watchQuery: {
+		fetchPolicy: "cache-and-network",
+		errorPolicy: "ignore",
+	},
+	query: {
+		fetchPolicy: "no-cache",
+		errorPolicy: "all",
+	},
+	mutate: {
+		errorPolicy: "all",
+	},
+};
 export const client = new ApolloClient({
 	// uri: "http://freelancer.lndo.site/graphql",
 	uri: "https://www.fabricio-rocha.com/graphql",
 	cache: new InMemoryCache(),
+	defaultOptions: defaultOptions,
 });
 
 export const GET_TEST = gql`
@@ -54,6 +55,17 @@ export const GET_NODE = gql`
 								url: url {
 									routed
 									path
+								}
+							}
+							fieldMedia {
+								entity {
+									... on MediaImage {
+										fieldMediaImage {
+											alt
+											title
+											url
+										}
+									}
 								}
 							}
 						}
